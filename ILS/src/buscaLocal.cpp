@@ -1,14 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <algorithm>
-#include "Data.h"
 #include "buscaLocal.h"
 
 using namespace std;
 
 bool bestImprovementSwap(Solution* s, Data* data){
     double bestDelta = 0;
+    double delta;
     int best_i, best_j;
     bool improved = false;
     for (size_t i = 1; i < s->sequence.size() - 2; i++)
@@ -21,7 +17,11 @@ bool bestImprovementSwap(Solution* s, Data* data){
             int vj = s->sequence[j];
             int prox_vj = s->sequence[j + 1];
             int ant_vj = s->sequence[j - 1];
-            double delta = -data->getDistance(ant_vi, vi) - data->getDistance(vi, prox_vi) + data->getDistance(ant_vi, vj) + data->getDistance(vj, prox_vi) - data->getDistance(ant_vj, vj) - data->getDistance(vj, prox_vj) +  data->getDistance(ant_vj, vi) + data->getDistance(vi, prox_vj);
+            if(vj = prox_vi){
+                delta = -data->getDistance(ant_vi, vi) + data->getDistance(ant_vi, vj) + data->getDistance(vj, vi) - data->getDistance(vi, vj) - data->getDistance(vj, prox_vj) + data->getDistance(vi, prox_vj);
+            } else {
+                delta = -data->getDistance(ant_vi, vi) - data->getDistance(vi, prox_vi) + data->getDistance(ant_vi, vj) + data->getDistance(vj, prox_vi) - data->getDistance(ant_vj, vj) - data->getDistance(vj, prox_vj) +  data->getDistance(ant_vj, vi) + data->getDistance(vi, prox_vj);
+            }
             //Tratar caso onde o i e o j são adjacentes
 
             if (delta < bestDelta)
@@ -72,7 +72,7 @@ bool bestImprovement2Opt(Solution* s, Data* data){
     return false;
 }
 
-bool bestImprovementOrOpt(Solution* s, int n, Data* data){
+bool bestImprovementOrOpt(Solution* s, Data* data, int n){
     double bestDelta = 0;
     int best_i, best_j;
     switch (n)
@@ -98,14 +98,14 @@ bool bestImprovementOrOpt(Solution* s, int n, Data* data){
             }
         }
         if(bestDelta < 0){
-        int valorBest_i = s->sequence[best_i];
-        s->sequence.erase(s->sequence.begin() +  best_i);
-        if(best_i < best_j){
-            best_j =  best_j - 1;
-        }
-        s->sequence.insert(s->sequence.begin() + (best_j + 1), valorBest_i);
-        s->valorObj = s->valorObj + bestDelta;
-        return true;
+            int valorBest_i = s->sequence[best_i];
+            s->sequence.erase(s->sequence.begin() + best_i);
+            if(best_i < best_j){
+                best_j =  best_j - 1;
+            }
+            s->sequence.insert(s->sequence.begin() + (best_j + 1), valorBest_i);
+            s->valorObj = s->valorObj + bestDelta;
+            return true;
         }
         return false;
         break;
@@ -131,6 +131,17 @@ bool bestImprovementOrOpt(Solution* s, int n, Data* data){
             }
         }
         if(bestDelta < 0){
+            int valorBest_i = s->sequence[best_i];
+            int valorproxBest_i = s->sequence[best_i + 1];
+            s->sequence.erase(s->sequence.begin() + (best_i + 1));
+            s->sequence.erase(s->sequence.begin() + best_i);
+            
+            if(best_i < best_j){
+                best_j = best_j - 2;
+            }
+
+            s->sequence.insert(s->sequence.begin() + (best_j + 1), valorBest_i);
+            s->sequence.insert(s->sequence.begin() + (best_j + 2), valorproxBest_i);
             s->valorObj = s->valorObj + bestDelta;
             return true;
         }
@@ -159,6 +170,23 @@ bool bestImprovementOrOpt(Solution* s, int n, Data* data){
             }
         }
         if(bestDelta < 0){
+            int valorBest_i = s->sequence[best_i];
+            int valorBest_i2 = s->sequence[best_i + 1];
+            int valorBest_i3 = s->sequence[best_i + 2];
+
+            s->sequence.erase(s->sequence.begin() + best_i + 2);
+            s->sequence.erase(s->sequence.begin() + best_i + 1);
+            s->sequence.erase(s->sequence.begin() + best_i);
+
+            if(best_i < best_j){
+                best_j = best_j - 3;
+            }
+
+            s->sequence.insert(s->sequence.begin() + best_j + 1, valorBest_i);
+            s->sequence.insert(s->sequence.begin() + best_j + 2, valorBest_i2);
+            s->sequence.insert(s->sequence.begin() + best_j + 3, valorBest_i3);
+
+
             s->valorObj = s->valorObj + bestDelta;
             return true;
         }
@@ -176,7 +204,7 @@ void BuscaLocal(Solution* s, Data* data){
 
     while (NL.empty() == false)
     {
-        int n = rand() % NL.size();
+        int n = (rand() % NL.size());
         switch (NL[n])
         {
         case 1:
@@ -186,16 +214,19 @@ void BuscaLocal(Solution* s, Data* data){
             improved = bestImprovement2Opt(s, data);
             break;
         case 3:
-            improved = bestImprovementOrOpt(s, 1, data);
+            improved = bestImprovementOrOpt(s, data, 1);
             break;
         case 4:
-            improved = bestImprovementOrOpt(s, 2, data);
+            improved = bestImprovementOrOpt(s, data, 2);
             break;
         case 5:
-            improved = bestImprovementOrOpt(s, 3, data);
+            improved = bestImprovementOrOpt(s, data, 3);
+            break;
+        default:
             break;
         }
-        if(improved){
+
+        if(!improved){
             NL = {1, 2, 3, 4, 5};
         } else {
             NL.erase(NL.begin() + n);

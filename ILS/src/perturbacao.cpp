@@ -1,7 +1,6 @@
-#include "Data.h"
-#include "construcao.h"
+#include "perturbacao.h"
 
-Solution Pertubucao(Solution s, Data* data){
+Solution Perturbacao(Solution s, Data* data){
     Solution s_linha = s;
 
     int maximo = ceil(s_linha.sequence.size() / 10.0);

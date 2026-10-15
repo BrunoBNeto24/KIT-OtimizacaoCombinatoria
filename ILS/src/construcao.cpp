@@ -1,9 +1,3 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <algorithm>
-#include <ctime>
-#include "Data.h"
 #include "construcao.h"
 
 using namespace std;
@@ -26,11 +20,14 @@ vector<insertionInfo> calcularCustoInsercao(Solution& s, vector<int> CL, Data* d
 }
 
 vector<int> escolher3NosAleatorios(int n){
-    vector<int> numeros = {1, 1};
+    vector<int> numeros = {1};
     for(int i = 0; i < 3; i++){
         int noAleatorio = 2 + (rand() % (n - 1));
-        numeros.insert(numeros.begin() + (i + 1), noAleatorio); 
+        if(noAleatorio != numeros.back()){
+            numeros.push_back(noAleatorio);
+       }
     }
+    numeros.push_back(1);
     return numeros;
 }
 
@@ -82,25 +79,4 @@ Solution Construcao(Data* data){
         CL.erase(valor);
     }
     return s;
-}
-
-
-void imprimirSolucao(Solution* s){
-    if(s == nullptr || s->sequence.empty()){
-        cout << "solução vazia" << endl;
-    }
-    cout << "Custo: " << s->valorObj << endl;
-    cout << "Rota: " << endl;
-    for(size_t i = 0; i < s->sequence.size() - 1; i++){
-        cout << s->sequence[i] << " ";
-    }
-    cout << s->sequence[0] << endl;
-}
-
-double calcularValorObj(Solution* s, Data* data){
-    s->valorObj = 0;
-    for(int i = 0; s->sequence.size() - 1; i++){
-        s->valorObj += data->getDistance(s->sequence[i], s->sequence[i+1]);
-    }
-    return s->valorObj;
 }

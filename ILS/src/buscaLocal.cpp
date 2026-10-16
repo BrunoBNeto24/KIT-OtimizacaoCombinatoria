@@ -209,18 +209,23 @@ void BuscaLocal(Solution* s, Data* data){
         {
         case 1:
             improved = bestImprovementSwap(s, data);
+            cout << "1" << endl;
             break;
         case 2:
             improved = bestImprovement2Opt(s, data);
+            cout << "2" << endl;
             break;
         case 3:
             improved = bestImprovementOrOpt(s, data, 1);
+            cout << "3" << endl;
             break;
         case 4:
             improved = bestImprovementOrOpt(s, data, 2);
+            cout << "4" << endl;
             break;
         case 5:
             improved = bestImprovementOrOpt(s, data, 3);
+            cout << "5" << endl;
             break;
         default:
             break;
@@ -230,6 +235,7 @@ void BuscaLocal(Solution* s, Data* data){
             NL = {1, 2, 3, 4, 5};
         } else {
             NL.erase(NL.begin() + n);
-        }    
+        } 
+        imprimirSolucao(s);   
     }
 }

@@ -6,15 +6,15 @@ void imprimirSolucao(Solution* s){
     }
     cout << "Custo: " << s->valorObj << endl;
     cout << "Rota: " << endl;
-    for(size_t i = 0; i < s->sequence.size() - 1; i++){
+    for(size_t i = 0; i < s->sequence.size(); i++){
         cout << s->sequence[i] << " ";
     }
-    cout << s->sequence[0] << endl;
+    cout << endl;
 }
 
 double calcularValorObj(Solution* s, Data* data){
     s->valorObj = 0;
-    for(int i = 0; s->sequence.size() - 1; i++){
+    for(int i = 0; s->sequence.size()  - 1; i++){
         s->valorObj += data->getDistance(s->sequence[i], s->sequence[i+1]);
     }
     return s->valorObj;

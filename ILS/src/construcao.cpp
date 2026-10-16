@@ -21,11 +21,21 @@ vector<insertionInfo> calcularCustoInsercao(Solution& s, vector<int> CL, Data* d
 
 vector<int> escolher3NosAleatorios(int n){
     vector<int> numeros = {1};
-    for(int i = 0; i < 3; i++){
+
+    while(numeros.size() < 4){
         int noAleatorio = 2 + (rand() % (n - 1));
-        if(noAleatorio != numeros.back()){
+        bool presente = false;
+
+        for(int n : numeros){
+            if(n == noAleatorio){
+                presente = true;
+                break;
+            }
+        }
+
+        if(!presente){
             numeros.push_back(noAleatorio);
-       }
+        }
     }
     numeros.push_back(1);
     return numeros;
@@ -65,6 +75,7 @@ Solution Construcao(Data* data){
     Solution s;
     s.valorObj = 0;
     s.sequence = escolher3NosAleatorios(data->getDimension());
+    s.valorObj = calcularValorObj(&s , data);
     vector<int> CL = nosRestantes(data->getDimension() , &s);
     cout << "O tamanho de Cl: " << CL.size() << endl;
     while (!CL.empty())

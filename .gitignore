@@ -1,0 +1,8 @@
+# Ignora todos os arquivos e pastas na raiz do repositório
+/*
+
+# Mantém a pasta ILS e todo o seu conteúdo
+!/ILS/
+
+# Mantém este arquivo de configuração
+!/.gitignore

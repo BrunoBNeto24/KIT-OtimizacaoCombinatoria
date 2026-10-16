@@ -14,7 +14,7 @@ void imprimirSolucao(Solution* s){
 
 double calcularValorObj(Solution* s, Data* data){
     s->valorObj = 0;
-    for(int i = 0; s->sequence.size()  - 1; i++){
+    for(size_t i = 0; i < s->sequence.size() - 1; i++){
         s->valorObj += data->getDistance(s->sequence[i], s->sequence[i+1]);
     }
     return s->valorObj;

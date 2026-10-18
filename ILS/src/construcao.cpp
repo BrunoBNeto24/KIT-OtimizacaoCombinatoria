@@ -77,7 +77,6 @@ Solution Construcao(Data* data){
     s.sequence = escolher3NosAleatorios(data->getDimension());
     s.valorObj = calcularValorObj(&s , data);
     vector<int> CL = nosRestantes(data->getDimension() , &s);
-    cout << "O tamanho de Cl: " << CL.size() << endl;
     while (!CL.empty())
     {
         vector<insertionInfo> custoInsercao =  calcularCustoInsercao(s, CL, data);

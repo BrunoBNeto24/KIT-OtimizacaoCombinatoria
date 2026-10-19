@@ -17,7 +17,7 @@ bool bestImprovementSwap(Solution* s, Data* data){
             int prox_vj = s->sequence[j + 1];
             int ant_vj = s->sequence[j - 1];
             if(vj == prox_vi){
-                delta = -data->getDistance(ant_vi, vi) + data->getDistance(ant_vi, vj) + data->getDistance(vj, vi) - data->getDistance(vi, vj) - data->getDistance(vj, prox_vj) + data->getDistance(vi, prox_vj);
+                delta = -data->getDistance(ant_vi, vi) + data->getDistance(ant_vi, vj) - data->getDistance(vj, prox_vj) + data->getDistance(vi, prox_vj);
             } else {
                 delta = -data->getDistance(ant_vi, vi) - data->getDistance(vi, prox_vi) + data->getDistance(ant_vi, vj) + data->getDistance(vj, prox_vi) - data->getDistance(ant_vj, vj) - data->getDistance(vj, prox_vj) +  data->getDistance(ant_vj, vi) + data->getDistance(vi, prox_vj);
             }
@@ -55,7 +55,7 @@ bool bestImprovement2Opt(Solution* s, Data* data){
        {
         int vj = s->sequence[j];
         int prox_vj = s->sequence[j + 1];
-
+        /*Analisar os casos de onde podem ser adjaacentes e podendo utilizar somente o swap*/
         double delta = data->getDistance(ant_vi, vj) + data->getDistance(vi, prox_vj) - data->getDistance(ant_vi, vi) - data->getDistance(vj, prox_vj);
 
         if(delta < bestDelta){
@@ -86,7 +86,7 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             int vi = s->sequence[i];
             int prox_vi = s->sequence[i + 1];
             int ant_vi = s->sequence[i - 1];
-            for (size_t j = i + 1; j < s->sequence.size() - 1; j++)
+            for (size_t j = 0; j < s->sequence.size() - 1; j++)
             {
                 int vj = s->sequence[j];
                 int prox_vj = s->sequence[j + 1];
@@ -121,7 +121,7 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             int prox_i = s->sequence[i + 1];
             int prox2_i = s->sequence[i + 2];
             int ant_i = s->sequence[i - 1];
-            for (size_t j = i + 2; j < s->sequence.size() - 1; j++)
+            for (size_t j = 0; j < s->sequence.size() - 1; j++)
             {
                 int vj = s->sequence[j];
                 int prox_j = s->sequence[j + 1];
@@ -163,7 +163,7 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             int prox2_i = s->sequence[i + 2];
             int prox3_i = s->sequence[i + 3];
             int ant_i = s->sequence[i - 1];
-            for (size_t j = i + 3; j < s->sequence.size() - 1; j++)
+            for (size_t j = 0; j < s->sequence.size() - 1; j++)
             {
                 int vj = s->sequence[j];
                 int prox_j = s->sequence[j + 1];

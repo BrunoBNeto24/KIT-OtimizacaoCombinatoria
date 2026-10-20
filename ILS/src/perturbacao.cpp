@@ -5,8 +5,8 @@ Solution Perturbacao(Solution s, Data* data){
 
     int maximo = ceil(s_linha.sequence.size() / 10.0);
     
-    int tam_1 = 2 + (rand() % maximo - 1);
-    int tam_2 = 2 + (rand() % maximo - 1);
+    int tam_1 = 2 + (rand() % maximo);
+    int tam_2 = 2 + (rand() % maximo);
 
     int opcoes_i = (s_linha.sequence.size() - 1) - tam_1 - tam_2;
     int i = 1 + (rand() % opcoes_i);

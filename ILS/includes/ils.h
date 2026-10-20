@@ -6,6 +6,6 @@
 #include "buscaLocal.h"
 #include "perturbacao.h"
 
-Solution ILS(int maxIter, int maxIterIls, Data* data);
+Solution ILS(int maxIter, int maxIterIls, Data data);
 
 #endif

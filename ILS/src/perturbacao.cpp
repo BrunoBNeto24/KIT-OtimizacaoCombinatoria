@@ -2,6 +2,7 @@
 
 Solution Perturbacao(Solution s, Data* data){
     Solution s_linha = s;
+    double delta = 0.0;
 
     int maximo = ceil(s_linha.sequence.size() / 10.0);
     
@@ -16,6 +17,12 @@ Solution Perturbacao(Solution s, Data* data){
     int opcoes_j = max_j - min_j + 1;
     int j = min_j + (rand() % opcoes_j);
 
+    if(i + tam_1 == j){
+        delta = - data->getDistance(s_linha.sequence[i - 1], s_linha.sequence[i]) - data->getDistance(s_linha.sequence[i + tam_1 - 1], s_linha.sequence[j]) - data->getDistance(s_linha.sequence[j + tam_2 - 1], s_linha.sequence[j + tam_2]) + data->getDistance(s_linha.sequence[i - 1], s_linha.sequence[j]) + data->getDistance(s_linha.sequence[i + tam_1 - 1], s_linha.sequence[j + tam_2]) + data->getDistance(s_linha.sequence[j + tam_2 - 1], s_linha.sequence[i]);
+    } else {
+        delta = - data->getDistance(s_linha.sequence[i - 1], s_linha.sequence[i]) - data->getDistance(s_linha.sequence[i + tam_1 - 1], s_linha.sequence[i + tam_1]) - data->getDistance(s_linha.sequence[j - 1], s_linha.sequence[j]) - data->getDistance(s_linha.sequence[j + tam_2 - 1], s_linha.sequence[j + tam_2]) + data->getDistance(s_linha.sequence[i - 1], s_linha.sequence[j]) + data->getDistance(s_linha.sequence[j + tam_2 - 1], s_linha.sequence[i + tam_1]) + data->getDistance(s_linha.sequence[j - 1], s_linha.sequence[i]) + data->getDistance(s_linha.sequence[i + tam_1 - 1], s_linha.sequence[j + tam_2]);  
+    }
+
     vector<int> sequencia_perturbada;
 
     sequencia_perturbada.insert(sequencia_perturbada.end(), s_linha.sequence.begin(), s_linha.sequence.begin() + i);
@@ -26,7 +33,8 @@ Solution Perturbacao(Solution s, Data* data){
 
     s_linha.sequence = sequencia_perturbada;
 
-    s_linha.valorObj = calcularValorObj(&s_linha, data);
+    s_linha.valorObj += delta;
+    /*Mudar a função de calculo, ao inves de recalcular tudo de novo, utilizar os  valores que tem e adicionar o valroObj*/
 
     return s_linha;
 }

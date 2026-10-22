@@ -90,6 +90,10 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             {
                 int vj = s->sequence[j];
                 int prox_vj = s->sequence[j + 1];
+
+                /*if(vj == vi || vj == prox_vi){
+                    continue;
+                }*/
                 
                 double delta = - data->getDistance(ant_vi, vi) - data->getDistance(vi, prox_vi) + data->getDistance(vj, vi) + data->getDistance(vi, prox_vj) + data->getDistance(ant_vi, prox_vi) - data->getDistance(vj, prox_vj);
 
@@ -118,15 +122,19 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
         for (size_t i = 1; i < s->sequence.size() - 3; i++)
         {
             int vi = s->sequence[i];
-            int prox_i = s->sequence[i + 1];
-            int prox2_i = s->sequence[i + 2];
-            int ant_i = s->sequence[i - 1];
+            int prox_vi = s->sequence[i + 1];
+            int prox2_vi = s->sequence[i + 2];
+            int ant_vi = s->sequence[i - 1];
             for (size_t j = i + 2; j < s->sequence.size() - 1; j++)
             {
                 int vj = s->sequence[j];
                 int prox_j = s->sequence[j + 1];
+
+                /*if(vj == vi || vj == prox_vi || vj == prox2_vi){
+                    continue;
+                }*/
                 
-                double delta = data->getDistance(vj, vi) + data->getDistance(prox_i, prox_j) + data->getDistance(ant_i, prox2_i) - data->getDistance(ant_i, vi) - data->getDistance(prox_i, prox2_i) - data->getDistance(vj, prox_j);
+                double delta = data->getDistance(vj, vi) + data->getDistance(prox_vi, prox_j) + data->getDistance(ant_vi, prox2_vi) - data->getDistance(ant_vi, vi) - data->getDistance(prox_vi, prox2_vi) - data->getDistance(vj, prox_j);
 
                 if(delta < bestDelta){
                     bestDelta = delta;
@@ -159,16 +167,20 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
         for (size_t i = 1; i < s->sequence.size() - 4; i++)
         {
             int vi = s->sequence[i];
-            //int prox_i = s->sequence[i + 1]; desncessário para o casos do Or-opt-3
-            int prox2_i = s->sequence[i + 2];
-            int prox3_i = s->sequence[i + 3];
-            int ant_i = s->sequence[i - 1];
+            int prox_vi = s->sequence[i + 1];
+            int prox2_vi = s->sequence[i + 2];
+            int prox3_vi = s->sequence[i + 3];
+            int ant_vi = s->sequence[i - 1];
             for (size_t j = i + 3; j < s->sequence.size() - 1; j++)
             {
                 int vj = s->sequence[j];
                 int prox_j = s->sequence[j + 1];
+
+                /*if(vj == vi || vj == prox_vi || vj == prox2_vi || vj == prox3_vi){
+                    continue;
+                }*/
                 
-                double delta = data->getDistance(vj, vi) + data->getDistance(prox2_i, prox_j) + data->getDistance(ant_i, prox3_i) - data->getDistance(ant_i, vi) - data->getDistance(prox2_i, prox3_i) - data->getDistance(vj, prox_j);
+                double delta = data->getDistance(vj, vi) + data->getDistance(prox2_vi, prox_j) + data->getDistance(ant_vi, prox3_vi) - data->getDistance(ant_vi, vi) - data->getDistance(prox2_vi, prox3_vi) - data->getDistance(vj, prox_j);
 
                 if(delta < bestDelta){
                     bestDelta = delta;

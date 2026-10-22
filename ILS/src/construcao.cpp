@@ -82,7 +82,11 @@ Solution Construcao(Data* data){
         vector<insertionInfo> custoInsercao =  calcularCustoInsercao(s, CL, data);
         ordenarEmOrdemCrescente(custoInsercao);
         double alpha = (double) rand() / RAND_MAX;
-        int selecionado = rand() % ((int) ceil(alpha * custoInsercao.size()));
+        int limite = (int) ceil(alpha * custoInsercao.size());
+        if(limite < 1){
+            limite = 1;
+        }
+        int selecionado = rand() % limite;
         inserirNaSolucao(&s, custoInsercao[selecionado]);
 
         auto valor = find(CL.begin(), CL.end(), custoInsercao[selecionado].noInserido);

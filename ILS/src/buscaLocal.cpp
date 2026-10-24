@@ -21,7 +21,6 @@ bool bestImprovementSwap(Solution* s, Data* data){
             } else {
                 delta = -data->getDistance(ant_vi, vi) - data->getDistance(vi, prox_vi) + data->getDistance(ant_vi, vj) + data->getDistance(vj, prox_vi) - data->getDistance(ant_vj, vj) - data->getDistance(vj, prox_vj) +  data->getDistance(ant_vj, vi) + data->getDistance(vi, prox_vj);
             }
-            //Tratar caso onde o i e o j são adjacentes
 
             if (delta < bestDelta)
             {
@@ -34,7 +33,6 @@ bool bestImprovementSwap(Solution* s, Data* data){
         
     }
     if(bestDelta < 0){
-        //cout << s->sequence[best_i] << " e " << s->sequence[best_j] << endl; 
         swap(s->sequence[best_i], s->sequence[best_j]);
         s->valorObj = s->valorObj + bestDelta;
         return true;
@@ -55,7 +53,7 @@ bool bestImprovement2Opt(Solution* s, Data* data){
        {
         int vj = s->sequence[j];
         int prox_vj = s->sequence[j + 1];
-        /*Analisar os casos de onde podem ser adjaacentes e podendo utilizar somente o swap*/
+        /*Analisar os casos de onde podem ser adjacentes e podendo utilizar somente o swap*/
         double delta = data->getDistance(ant_vi, vj) + data->getDistance(vi, prox_vj) - data->getDistance(ant_vi, vi) - data->getDistance(vj, prox_vj);
 
         if(delta < bestDelta){
@@ -66,7 +64,6 @@ bool bestImprovement2Opt(Solution* s, Data* data){
        }
     }
     if(bestDelta < 0){
-        //cout << s->sequence[best_i] << " e " << s->sequence[best_j] << endl;
         reverse(s->sequence.begin() + best_i, s->sequence.begin() + best_j + 1);
         s->valorObj = s->valorObj + bestDelta;
         return true;
@@ -88,13 +85,13 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             int ant_vi = s->sequence[i - 1];
             for (size_t j = i + 1; j < s->sequence.size() - 1; j++)
             {
-                int vj = s->sequence[j];
-                int prox_vj = s->sequence[j + 1];
-
-                /*if(vj == vi || vj == prox_vi){
+                /*if(j == i - 1 || j == i){
                     continue;
                 }*/
                 
+                int vj = s->sequence[j];
+                int prox_vj = s->sequence[j + 1];
+
                 double delta = - data->getDistance(ant_vi, vi) - data->getDistance(vi, prox_vi) + data->getDistance(vj, vi) + data->getDistance(vi, prox_vj) + data->getDistance(ant_vi, prox_vi) - data->getDistance(vj, prox_vj);
 
                 if(delta < bestDelta){
@@ -105,7 +102,6 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             }
         }
         if(bestDelta < 0){
-            //cout << s->sequence[best_i] << " e " << s->sequence[best_j] << endl;
             int valorBest_i = s->sequence[best_i];
             s->sequence.erase(s->sequence.begin() + best_i);
             if(best_i < best_j){
@@ -127,12 +123,12 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             int ant_vi = s->sequence[i - 1];
             for (size_t j = i + 2; j < s->sequence.size() - 1; j++)
             {
-                int vj = s->sequence[j];
-                int prox_j = s->sequence[j + 1];
-
-                /*if(vj == vi || vj == prox_vi || vj == prox2_vi){
+                /*if(j == i - 1 || j == i || j == i + 1){
                     continue;
                 }*/
+
+                int vj = s->sequence[j];
+                int prox_j = s->sequence[j + 1];
                 
                 double delta = data->getDistance(vj, vi) + data->getDistance(prox_vi, prox_j) + data->getDistance(ant_vi, prox2_vi) - data->getDistance(ant_vi, vi) - data->getDistance(prox_vi, prox2_vi) - data->getDistance(vj, prox_j);
 
@@ -144,7 +140,6 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             }
         }
         if(bestDelta < 0){
-            //cout << s->sequence[best_i] << " e " << s->sequence[best_j] << endl;
             int valorBest_i = s->sequence[best_i];
             int valorproxBest_i = s->sequence[best_i + 1];
             s->sequence.erase(s->sequence.begin() + (best_i + 1));
@@ -173,12 +168,12 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             int ant_vi = s->sequence[i - 1];
             for (size_t j = i + 3; j < s->sequence.size() - 1; j++)
             {
-                int vj = s->sequence[j];
-                int prox_j = s->sequence[j + 1];
-
-                /*if(vj == vi || vj == prox_vi || vj == prox2_vi || vj == prox3_vi){
+                /*if(j == i - 1 || j == i || j == i + 1 || j == i + 2){
                     continue;
                 }*/
+
+                int vj = s->sequence[j];
+                int prox_j = s->sequence[j + 1];
                 
                 double delta = data->getDistance(vj, vi) + data->getDistance(prox2_vi, prox_j) + data->getDistance(ant_vi, prox3_vi) - data->getDistance(ant_vi, vi) - data->getDistance(prox2_vi, prox3_vi) - data->getDistance(vj, prox_j);
 
@@ -190,7 +185,6 @@ bool bestImprovementOrOpt(Solution* s, Data* data, int n){
             }
         }
         if(bestDelta < 0){
-            //cout << s->sequence[best_i] << " e " << s->sequence[best_j] << endl;
             int valorBest_i = s->sequence[best_i];
             int valorBest_i2 = s->sequence[best_i + 1];
             int valorBest_i3 = s->sequence[best_i + 2];
@@ -231,29 +225,19 @@ void BuscaLocal(Solution* s, Data* data){
         switch (NL[n])
         {
         case 1:
-            //cout << "1" << endl;
             improved = bestImprovementSwap(s, data);
-            //cout << to_string(improved) << endl;
             break;
         case 2:
-            //cout << "2" << endl;
             improved = bestImprovement2Opt(s, data);
-            //cout << to_string(improved) << endl;
             break;
         case 3:
-            //cout << "3" << endl;
             improved = bestImprovementOrOpt(s, data, 1);
-            //cout << to_string(improved) << endl;
             break;
         case 4:
-            //cout << "4" << endl;
             improved = bestImprovementOrOpt(s, data, 2);
-            //cout << to_string(improved) << endl;
             break;
         case 5:
-            //cout << "5" << endl;
             improved = bestImprovementOrOpt(s, data, 3);
-            //cout << to_string(improved) << endl;
             break;
         default:
             break;
@@ -263,6 +247,5 @@ void BuscaLocal(Solution* s, Data* data){
         } else {
             NL.erase(NL.begin() + n);
         } 
-        //imprimirSolucao(s);   
     }
 }

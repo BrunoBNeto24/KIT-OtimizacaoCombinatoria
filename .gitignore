@@ -6,3 +6,5 @@
 
 # Mantém este arquivo de configuração
 !/.gitignore
+
+!/MLP/

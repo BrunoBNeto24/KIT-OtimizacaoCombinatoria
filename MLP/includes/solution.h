@@ -20,11 +20,12 @@ struct Solution
 struct insertionInfo
 {
     int noInserido;
-    int arestaRemovida;
+    //int arestaRemovida;
     double custoInsertion;
 };
 
 void imprimirSolucao(Solution* s);
 double calcularValorObj(Solution* s, Data* data);
+double calcularLatencia(Solution* s, Data* data);
 
 #endif

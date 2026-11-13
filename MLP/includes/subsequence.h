@@ -28,5 +28,6 @@ struct Subsequence
 };
 
 void UpdateAllSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data & data);
+void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, int best_i, int best_j, Data & data);
 
 #endif

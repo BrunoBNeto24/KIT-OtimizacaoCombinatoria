@@ -1,6 +1,6 @@
 #include "subsequence.h"
 
-void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, int best_i, int best_j, Data & data){
+void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, int best_i, int best_j, Data* data){
     int n = s.sequence.size();
 
     for(int i = best_i; i < n; i++){
@@ -24,7 +24,7 @@ void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix,
     }
 }
 
-void UpdateAllSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data & data){
+void UpdateAllSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data* data){
     int n = s.sequence.size();
 
     for(int i = 0; i < n; i++){

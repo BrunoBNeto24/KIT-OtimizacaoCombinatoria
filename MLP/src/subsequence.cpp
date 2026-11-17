@@ -3,7 +3,7 @@
 void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, int best_i, int best_j, Data & data){
     int n = s.sequence.size();
 
-    for(int i = 0; i < n; i++){
+    for(int i = best_i; i < n; i++){
         subseq_matrix[i][i].W = (i > 0);
         subseq_matrix[i][i].C = 0;
         subseq_matrix[i][i].T = 0;

@@ -14,15 +14,15 @@ void imprimirSolucao(Solution* s){
 
 double calcularValorObj(Solution* s, Data* data){
     s->valorObj = 0;
-    for(size_t i = 1; i < s->sequence.size() - 1; i++){
-        s->valorObj += (s->sequence.size() - i + 1) * data->getDistance(s->sequence[i - 1], s->sequence[i]);
+    for(size_t i = 1; i < s->sequence.size(); i++){
+        s->valorObj += (s->sequence.size() - i) * data->getDistance(s->sequence[i - 1], s->sequence[i]);
     }
     return s->valorObj;
 }
 
 double calcularLatencia(Solution* s, Data* data){
     double latencia = 0;
-    for(size_t a = 1; a < s->sequence.size() - 1; a++){
+    for(size_t a = 1; a < s->sequence.size(); a++){
         int i = s->sequence[a];
         int ant_i = s->sequence[a - 1];
         latencia += data->getDistance(ant_i, i);

@@ -41,8 +41,8 @@ void UpdateAllSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, 
         }
     }
 
-    for(int i = n - 1; i >= n; i--){
-        for(int j = i - 1; j >= n; j--){
+    for(int i = n - 1; i >= 0; i--){
+        for(int j = i - 1; j >= 0; j--){
             subseq_matrix[i][j] = Subsequence::Concatenar(subseq_matrix[i][j+1], subseq_matrix[j][j], data);
         }
     }

@@ -65,10 +65,5 @@ Solution Construcao(Data* data){
 
     s.sequence.push_back(1);
     s.valorObj = s.valorObj + calcularLatencia(&s, data);
-
-    imprimirSolucao(&s);
-
-    s.valorObj = calcularValorObj(&s, data);
-    
     return s;
 }

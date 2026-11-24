@@ -5,6 +5,6 @@
 #include "solution.h"
 #include "subsequence.h"
 
-Solution Perturbacao(Solution s, Data* data);
+Solution Perturbacao(Solution s, vector<vector<Subsequence>> & subseq_matrix, Data* data);
 
 #endif

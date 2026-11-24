@@ -1,7 +1,9 @@
 #include "perturbacao.h"
+#include "subsequence.h"
 
-Solution Perturbacao(Solution s, Data* data){
+Solution Perturbacao(Solution s, vector<vector<Subsequence>> & subseq_matrix,Data* data){
     Solution s_linha = s;
+    Subsequence total;
     double delta = 0.0;
 
     int maximo = ceil(s_linha.sequence.size() / 10.0);
@@ -18,9 +20,18 @@ Solution Perturbacao(Solution s, Data* data){
     int j = min_j + (rand() % opcoes_j);
 
     if(i + tam_1 == j){
-        delta = - data->getDistance(s_linha.sequence[i - 1], s_linha.sequence[i]) - data->getDistance(s_linha.sequence[i + tam_1 - 1], s_linha.sequence[j]) - data->getDistance(s_linha.sequence[j + tam_2 - 1], s_linha.sequence[j + tam_2]) + data->getDistance(s_linha.sequence[i - 1], s_linha.sequence[j]) + data->getDistance(s_linha.sequence[i + tam_1 - 1], s_linha.sequence[j + tam_2]) + data->getDistance(s_linha.sequence[j + tam_2 - 1], s_linha.sequence[i]);
+
+        total = Subsequence::Concatenar(subseq_matrix[0][i - 1], subseq_matrix[j][j + tam_2 - 1], data); 
+        total = Subsequence::Concatenar(total, subseq_matrix[i][i + tam_1 - 1], data);
+        total = Subsequence::Concatenar(total, subseq_matrix[j + tam_2][s_linha.sequence.size() - 1], data);
+
     } else {
-        delta = - data->getDistance(s_linha.sequence[i - 1], s_linha.sequence[i]) - data->getDistance(s_linha.sequence[i + tam_1 - 1], s_linha.sequence[i + tam_1]) - data->getDistance(s_linha.sequence[j - 1], s_linha.sequence[j]) - data->getDistance(s_linha.sequence[j + tam_2 - 1], s_linha.sequence[j + tam_2]) + data->getDistance(s_linha.sequence[i - 1], s_linha.sequence[j]) + data->getDistance(s_linha.sequence[j + tam_2 - 1], s_linha.sequence[i + tam_1]) + data->getDistance(s_linha.sequence[j - 1], s_linha.sequence[i]) + data->getDistance(s_linha.sequence[i + tam_1 - 1], s_linha.sequence[j + tam_2]);  
+
+        total = Subsequence::Concatenar(subseq_matrix[0][i - 1], subseq_matrix[j][j + tam_2 - 1], data); 
+        total = Subsequence::Concatenar(total, subseq_matrix[i + tam_1][j - 1], data);
+        total = Subsequence::Concatenar(total, subseq_matrix[i][i + tam_1 - 1], data);
+        total = Subsequence::Concatenar(total, subseq_matrix[j + tam_2][s_linha.sequence.size() - 1], data);
+
     }
 
     vector<int> sequencia_perturbada;
@@ -33,8 +44,10 @@ Solution Perturbacao(Solution s, Data* data){
 
     s_linha.sequence = sequencia_perturbada;
 
-    s_linha.valorObj += delta;
+    s_linha.valorObj = total.C;
     /*Mudar a função de calculo, ao inves de recalcular tudo de novo, utilizar os  valores que tem e adicionar o valroObj*/
+
+    UpdateAllSubseq(s_linha, subseq_matrix, data);
 
     return s_linha;
 }

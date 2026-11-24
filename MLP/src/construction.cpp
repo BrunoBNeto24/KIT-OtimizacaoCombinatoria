@@ -43,12 +43,12 @@ Solution Construcao(Data* data){
     vector<int> CL = nosRestantes(data->getDimension());
     //cout << "O tamanho de Cl: " << CL.size() << endl;
     int r = s.sequence[0];
+    double alpha = rand() % 26;
     while (!CL.empty())
     {
         vector<insertionInfo> custoInsercao = calcularCustoInsercao(s, CL, r, data);
         ordenarEmOrdemCrescente(custoInsercao);
-        double alpha = (double) rand() / RAND_MAX;
-        int limite = (int) ceil(alpha * custoInsercao.size());
+        int limite = (int) ceil((alpha/100.0) * custoInsercao.size());
         
         if(limite < 1){
             limite = 1;

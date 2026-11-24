@@ -5,12 +5,12 @@
 #include "solution.h"
 #include "subsequence.h"
 
-bool bestImprovementSwap(Solution* s, Data* data);
+bool bestImprovementSwap(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data* data);
 
-bool bestImprovement2Opt(Solution* s, Data* data);
+bool bestImprovement2Opt(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data* data);
 
-bool bestImprovementOrOpt(Solution* s, Data* data, int n);
+bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data* data, int n);
 
-void BuscaLocal(Solution* s, Data* data);
+void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data* data);
 
 #endif

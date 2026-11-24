@@ -12,11 +12,11 @@ bool bestImprovementSwap(Solution & s, vector<vector<Subsequence>> & subseq_matr
     {
         int prox_vi = s.sequence[i + 1];
         sigma_1 = subseq_matrix[0][i - 1];
-        for (size_t j = i + 1; j < s.sequence.size() - 2; j++)
+        for (size_t j = i + 1; j < s.sequence.size() - 1; j++)
         {
             int vj = s.sequence[j];
             if(vj == prox_vi){
-                sigma_2 = subseq_matrix[i + 1][s.sequence.size() - 1];
+                sigma_2 = subseq_matrix[j + 1][s.sequence.size() - 1];
 
                 total = Subsequence::Concatenar(sigma_1, subseq_matrix[j][j], data);
                 total = Subsequence::Concatenar(total, subseq_matrix[i][i], data);
@@ -49,7 +49,7 @@ bool bestImprovementSwap(Solution & s, vector<vector<Subsequence>> & subseq_matr
     if(bestDelta < 0){
         swap(s.sequence[best_i], s.sequence[best_j]);
         s.valorObj = s.valorObj + bestDelta;
-        UpdateParcSubseq(s, subseq_matrix, best_i, best_j, data);
+        UpdateAllSubseq(s, subseq_matrix, data);
         return true;
     } else{
         return false;
@@ -64,7 +64,7 @@ bool bestImprovement2Opt(Solution & s, vector<vector<Subsequence>> & subseq_matr
     for (size_t i = 1; i < s.sequence.size() - 2; i++)
     {
        sigma_1 = subseq_matrix[0][i - 1];
-       for (size_t j = i + 1; j < s.sequence.size() - 2; j++)
+       for (size_t j = i + 1; j < s.sequence.size() - 1; j++)
        {
         sigma_2 = subseq_matrix[j + 1][s.sequence.size() - 1];
 
@@ -84,7 +84,7 @@ bool bestImprovement2Opt(Solution & s, vector<vector<Subsequence>> & subseq_matr
     if(bestDelta < 0){
         reverse(s.sequence.begin() + best_i, s.sequence.begin() + best_j + 1);
         s.valorObj = s.valorObj + bestDelta;
-        UpdateParcSubseq(s, subseq_matrix, best_i, best_j, data);
+        UpdateAllSubseq(s, subseq_matrix, data);
         return true;
     } else {
         return false;
@@ -110,10 +110,16 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
                 sigma_2 = subseq_matrix[i + 1][j - 1];
                 sigma_3 = subseq_matrix[j + 1][s.sequence.size() - 1];
 
-                total = Subsequence::Concatenar(sigma_1, sigma_2, data);
-                total = Subsequence::Concatenar(total, subseq_matrix[j][j], data);
-                total = Subsequence::Concatenar(total, subseq_matrix[i][i], data);
-                total = Subsequence::Concatenar(total, sigma_3, data);
+                if(j == i + 1){
+                    total = Subsequence::Concatenar(sigma_1, subseq_matrix[j][j], data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[i][i], data);
+                    total = Subsequence::Concatenar(total, sigma_3, data);
+                } else {
+                    total = Subsequence::Concatenar(sigma_1, sigma_2, data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[j][j], data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[i][i], data);
+                    total = Subsequence::Concatenar(total, sigma_3, data);
+                }
 
                 double delta = total.C - s.valorObj;
 
@@ -132,7 +138,7 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
             }
             s.sequence.insert(s.sequence.begin() + (best_j + 1), valorBest_i);
             s.valorObj = s.valorObj + bestDelta;
-            UpdateParcSubseq(s, subseq_matrix, best_i, best_j, data);
+            UpdateAllSubseq(s, subseq_matrix, data);          
             return true;
         } else {
             return false;
@@ -151,10 +157,16 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
                 sigma_2 = subseq_matrix[i + 2][j - 1];
                 sigma_3 = subseq_matrix[j + 1][s.sequence.size() - 1];
 
-                total = Subsequence::Concatenar(sigma_1, sigma_2, data);
-                total = Subsequence::Concatenar(total, subseq_matrix[j][j], data);
-                total = Subsequence::Concatenar(total, subseq_matrix[i][i + 1], data);
-                total = Subsequence::Concatenar(total, sigma_3, data);
+                if(j == i + 2){
+                    total = Subsequence::Concatenar(sigma_1, subseq_matrix[j][j], data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[i][i + 1], data);
+                    total = Subsequence::Concatenar(total, sigma_3, data);
+                } else {
+                    total = Subsequence::Concatenar(sigma_1, sigma_2, data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[j][j], data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[i][i + 1], data);
+                    total = Subsequence::Concatenar(total, sigma_3, data);
+                }
 
                 double delta = total.C - s.valorObj;
 
@@ -179,7 +191,7 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
             s.sequence.insert(s.sequence.begin() + (best_j + 2), valorproxBest_i);
             s.valorObj = s.valorObj + bestDelta;
 
-            UpdateParcSubseq(s, subseq_matrix, best_i, best_j, data);
+            UpdateAllSubseq(s, subseq_matrix, data);
             return true;
         } else {
             return false;
@@ -198,10 +210,16 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
                 sigma_2 = subseq_matrix[i + 3][j - 1];
                 sigma_3 = subseq_matrix[j + 1][s.sequence.size() - 1];
 
-                total = Subsequence::Concatenar(sigma_1, sigma_2, data);
-                total = Subsequence::Concatenar(total, subseq_matrix[j][j], data);
-                total = Subsequence::Concatenar(total, subseq_matrix[i][i + 2], data);
-                total = Subsequence::Concatenar(total, sigma_3, data);
+                if(j == i + 3){
+                    total = Subsequence::Concatenar(sigma_1, subseq_matrix[j][j], data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[i][i + 2], data);
+                    total = Subsequence::Concatenar(total, sigma_3, data);
+                } else {
+                    total = Subsequence::Concatenar(sigma_1, sigma_2, data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[j][j], data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[i][i + 2], data);
+                    total = Subsequence::Concatenar(total, sigma_3, data);
+                }
 
                 double delta = total.C - s.valorObj;
 
@@ -232,7 +250,7 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
 
             s.valorObj = s.valorObj + bestDelta;
 
-            UpdateParcSubseq(s, subseq_matrix, best_i, best_j, data);
+            UpdateAllSubseq(s, subseq_matrix, data);
             return true;
         } else {
             return false;
@@ -248,6 +266,9 @@ void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data*
     vector<int> NL = {1, 2, 3, 4, 5};
     bool improved = false;
 
+
+    //while(bestImprovementSwap(s, subseq_matrix, data)){ }
+
     while (NL.empty() == false)
     {
         int n = (rand() % NL.size());
@@ -256,18 +277,28 @@ void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data*
         {
         case 1:
             improved = bestImprovementSwap(s, subseq_matrix, data);
+            //cout << "Swap" << endl;
+            //cout << improved << endl;
             break;
         case 2:
             improved = bestImprovement2Opt(s, subseq_matrix, data);
+            //cout << "2Opt" << endl;
+            //cout << improved << endl;
             break;
         case 3:
             improved = bestImprovementOrOpt(s, subseq_matrix, data, 1);
+            //cout << "Reinsertion" << endl;
+            //cout << improved << endl;
             break;
         case 4:
             improved = bestImprovementOrOpt(s, subseq_matrix, data, 2);
+            //cout << "OrOp2" << endl;
+            //cout << improved << endl;
             break;
         case 5:
             improved = bestImprovementOrOpt(s, subseq_matrix, data, 3);
+            //cout << "Oropt3" << endl;
+            //cout << improved << endl;
             break;
         default:
             break;
@@ -277,5 +308,6 @@ void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data*
         } else {
             NL.erase(NL.begin() + n);
         } 
+        //imprimirSolucao(&s);
     }
 }

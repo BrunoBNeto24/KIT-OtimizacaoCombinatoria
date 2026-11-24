@@ -12,10 +12,10 @@ struct Subsequence
     double T, C;
     int W;
     int first, last;
-    inline static Subsequence Concatenar(Subsequence & sigma_1, Subsequence & sigma_2, Data & data){
+    inline static Subsequence Concatenar(Subsequence & sigma_1, Subsequence & sigma_2, Data* data){
         Subsequence sigma;
 
-        double temp = data.getDistance(sigma_1.last, sigma_2.first);
+        double temp = data->getDistance(sigma_1.last, sigma_2.first);
 
         sigma.W = sigma_1.W + sigma_2.W;
         sigma.T = sigma_1.T + temp + sigma_2.T;
@@ -27,7 +27,7 @@ struct Subsequence
     }
 };
 
-void UpdateAllSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data & data);
-void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, int best_i, int best_j, Data & data);
+void UpdateAllSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data* data);
+void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, int best_i, int best_j, Data* data);
 
 #endif

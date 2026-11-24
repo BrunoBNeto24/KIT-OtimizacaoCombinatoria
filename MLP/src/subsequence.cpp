@@ -3,7 +3,7 @@
 void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix, int best_i, int best_j, Data* data){
     int n = s.sequence.size();
 
-    for(int i = best_i; i < n; i++){
+    for(int i = best_i; i <= best_j; i++){
         subseq_matrix[i][i].W = (i > 0);
         subseq_matrix[i][i].C = 0;
         subseq_matrix[i][i].T = 0;
@@ -12,13 +12,13 @@ void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix,
     }
 
     for(int i = best_i; i < n; i++){
-        for(int j = i + 1; j < best_j; j++){
+        for(int j = 1; j <= best_j; j++){
             subseq_matrix[i][j] = Subsequence::Concatenar(subseq_matrix[i][j-1], subseq_matrix[j][j], data);
         }
     }
 
-    for(int i = n - 1; i >= best_i; i--){
-        for(int j = i - 1; j >= best_j; j--){
+    for(int i = best_j; i >= 0; i--){
+        for(int j = n - 1; j >= best_i; j--){
             subseq_matrix[i][j] = Subsequence::Concatenar(subseq_matrix[i][j+1], subseq_matrix[j][j], data);
         }
     }

@@ -49,7 +49,7 @@ bool bestImprovementSwap(Solution & s, vector<vector<Subsequence>> & subseq_matr
     if(bestDelta < 0){
         swap(s.sequence[best_i], s.sequence[best_j]);
         s.valorObj = s.valorObj + bestDelta;
-        UpdateAllSubseq(s, subseq_matrix, data);
+        UpdateParcSubseq(s, subseq_matrix, best_i, best_j, data);
         return true;
     } else{
         return false;
@@ -84,7 +84,7 @@ bool bestImprovement2Opt(Solution & s, vector<vector<Subsequence>> & subseq_matr
     if(bestDelta < 0){
         reverse(s.sequence.begin() + best_i, s.sequence.begin() + best_j + 1);
         s.valorObj = s.valorObj + bestDelta;
-        UpdateAllSubseq(s, subseq_matrix, data);
+        UpdateParcSubseq(s, subseq_matrix, best_i, best_j, data);
         return true;
     } else {
         return false;
@@ -138,7 +138,7 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
             }
             s.sequence.insert(s.sequence.begin() + (best_j + 1), valorBest_i);
             s.valorObj = s.valorObj + bestDelta;
-            UpdateAllSubseq(s, subseq_matrix, data);          
+            UpdateParcSubseq(s, subseq_matrix, best_i, (best_j + 1),data);          
             return true;
         } else {
             return false;
@@ -191,7 +191,7 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
             s.sequence.insert(s.sequence.begin() + (best_j + 2), valorproxBest_i);
             s.valorObj = s.valorObj + bestDelta;
 
-            UpdateAllSubseq(s, subseq_matrix, data);
+            UpdateParcSubseq(s, subseq_matrix, best_i, (best_j + 2),data);
             return true;
         } else {
             return false;
@@ -249,8 +249,7 @@ bool bestImprovementOrOpt(Solution & s, vector<vector<Subsequence>> & subseq_mat
 
 
             s.valorObj = s.valorObj + bestDelta;
-
-            UpdateAllSubseq(s, subseq_matrix, data);
+            UpdateParcSubseq(s, subseq_matrix, best_i, (best_j + 3),data);
             return true;
         } else {
             return false;
@@ -267,7 +266,7 @@ void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data*
     bool improved = false;
 
 
-    //while(bestImprovementSwap(s, subseq_matrix, data)){ }
+    //while(bestImprovementSwap(s, subseq_matrix, data) || bestImprovement2Opt(s, subseq_matrix, data) ){ }
 
     while (NL.empty() == false)
     {
@@ -311,3 +310,47 @@ void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data*
         //imprimirSolucao(&s);
     }
 }
+
+
+/*for (size_t i = 1; i < s.sequence.size() - 2; i++)
+        {
+            for (size_t j = i + 1; j < s.sequence.size() - 1; j++)
+            {
+                
+                sigma_1 = subseq_matrix[0][i - 1];
+                sigma_2 = subseq_matrix[i + n][j - 1];
+                sigma_3 = subseq_matrix[j + 1][s.sequence.size() - 1];
+
+                if(j == i + 1){
+                    total = Subsequence::Concatenar(sigma_1, subseq_matrix[j][j], data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[i][i + n - 1], data);
+                    total = Subsequence::Concatenar(total, sigma_3, data);
+                } else {
+                    total = Subsequence::Concatenar(sigma_1, sigma_2, data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[j][j], data);
+                    total = Subsequence::Concatenar(total, subseq_matrix[i][i + n - 1], data);
+                    total = Subsequence::Concatenar(total, sigma_3, data);
+                }
+
+                double delta = total.C - s.valorObj;
+
+                if(delta < bestDelta){
+                    bestDelta = delta;
+                    best_i = i;
+                    best_j = j;
+                }
+            }
+        }
+        if(bestDelta < 0){
+            int valorBest_i = s.sequence[best_i];
+            s.sequence.erase(s.sequence.begin() + best_i);
+            if(best_i < best_j){
+                best_j =  best_j - 1;
+            }
+            s.sequence.insert(s.sequence.begin() + (best_j + 1), valorBest_i);
+            s.valorObj = s.valorObj + bestDelta;
+            UpdateAllSubseq(s, subseq_matrix, data);          
+            return true;
+        } else {
+            return false;
+        }*/

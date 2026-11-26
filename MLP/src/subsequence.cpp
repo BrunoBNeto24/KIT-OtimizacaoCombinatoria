@@ -11,14 +11,14 @@ void UpdateParcSubseq(Solution & s, vector<vector<Subsequence>> & subseq_matrix,
         subseq_matrix[i][i].last = s.sequence[i];
     }
 
-    for(int i = best_i; i < n; i++){
-        for(int j = 1; j <= best_j; j++){
+    for(int i = 0; i <= best_j; i++){
+        for(int j = max(i + 1, best_i); j < n; j++){
             subseq_matrix[i][j] = Subsequence::Concatenar(subseq_matrix[i][j-1], subseq_matrix[j][j], data);
         }
     }
 
-    for(int i = best_j; i >= 0; i--){
-        for(int j = n - 1; j >= best_i; j--){
+    for(int i = n - 1; i >= best_i; i--){
+        for(int j = min(i - 1, best_j); j >= 0; j--){
             subseq_matrix[i][j] = Subsequence::Concatenar(subseq_matrix[i][j+1], subseq_matrix[j][j], data);
         }
     }

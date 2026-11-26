@@ -17,19 +17,12 @@ Solution MLP(int maxIter, int maxIterIls, Data data){
         while (iterILS <= maxIterIls)
         {
             BuscaLocal(s, subsequ_matriz, &data);
-            //cout << "Apos Busca local" << endl;
-            //imprimirSolucao(&s);
-            //calcularValorObj(&s, &data);
-            //imprimirSolucao(&s);
+            
             if(s.valorObj < best.valorObj){
                 best = s;
                 iterILS = 0;
             }
             s = Perturbacao(best, subsequ_matriz, &data);
-            //cout << "Apos perturbacao" << endl;
-            //imprimirSolucao(&s);
-            //calcularValorObj(&s, &data);
-            //imprimirSolucao(&s);
             iterILS++;
         }
         if(best.valorObj < bestOfAll.valorObj){

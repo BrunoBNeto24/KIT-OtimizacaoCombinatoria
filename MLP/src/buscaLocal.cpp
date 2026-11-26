@@ -71,7 +71,6 @@ bool bestImprovement2Opt(Solution & s, vector<vector<Subsequence>> & subseq_matr
         total = Subsequence::Concatenar(sigma_1, subseq_matrix[j][i], data);
         total = Subsequence::Concatenar(total, sigma_2, data);
 
-        /*Analisar os casos de onde podem ser adjacentes e podendo utilizar somente o swap*/
         double delta = total.C - s.valorObj;
 
         if(delta < bestDelta){
@@ -265,9 +264,6 @@ void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data*
     vector<int> NL = {1, 2, 3, 4, 5};
     bool improved = false;
 
-
-    //while(bestImprovementSwap(s, subseq_matrix, data) || bestImprovement2Opt(s, subseq_matrix, data) ){ }
-
     while (NL.empty() == false)
     {
         int n = (rand() % NL.size());
@@ -276,28 +272,18 @@ void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data*
         {
         case 1:
             improved = bestImprovementSwap(s, subseq_matrix, data);
-            //cout << "Swap" << endl;
-            //cout << improved << endl;
             break;
         case 2:
             improved = bestImprovement2Opt(s, subseq_matrix, data);
-            //cout << "2Opt" << endl;
-            //cout << improved << endl;
             break;
         case 3:
             improved = bestImprovementOrOpt(s, subseq_matrix, data, 1);
-            //cout << "Reinsertion" << endl;
-            //cout << improved << endl;
             break;
         case 4:
             improved = bestImprovementOrOpt(s, subseq_matrix, data, 2);
-            //cout << "OrOp2" << endl;
-            //cout << improved << endl;
             break;
         case 5:
             improved = bestImprovementOrOpt(s, subseq_matrix, data, 3);
-            //cout << "Oropt3" << endl;
-            //cout << improved << endl;
             break;
         default:
             break;
@@ -307,7 +293,6 @@ void BuscaLocal(Solution & s, vector<vector<Subsequence>> & subseq_matrix, Data*
         } else {
             NL.erase(NL.begin() + n);
         } 
-        //imprimirSolucao(&s);
     }
 }
 
